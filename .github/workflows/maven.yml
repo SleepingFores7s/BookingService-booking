@@ -39,8 +39,13 @@ jobs:
           REVIEW_DB_PASS: ${{ secrets.REVIEW_DB_PASS }}
           REVIEW_DB_USER: ${{ secrets.REVIEW_DB_USER }}
 
-      - name: Wait for Services to Initialize
-        run: sleep 15
+      - name: Wait for MySQL Databases to be Ready
+        run: |
+          echo "Waiting for databases to accept connections..."
+          until nc -z localhost 3307 && nc -z localhost 3308 && nc -z localhost 3309; do
+            sleep 2
+          done
+          echo "Databases are up and running!"
 
       - name: Run Integration Tests with Maven
         run: mvn -B clean test --file pom.xml
