@@ -53,8 +53,8 @@ jobs:
           SPRING_PROFILES_ACTIVE: test
           JWT_SECRET: ${{ secrets.JWT_SECRET_KEY }}
           SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3307/Booking-service
-          SPRING_DATASOURCE_USERNAME: root
-          SPRING_DATASOURCE_PASSWORD: ${{ secrets.BOOKING_DB_ROOT_PASS }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.BOOKING_DB_USER }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.BOOKING_DB_PASS }}
 
       - name: Stop Containers and Cleanup
         if: always()
