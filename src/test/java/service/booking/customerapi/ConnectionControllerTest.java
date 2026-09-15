@@ -44,15 +44,6 @@ class ConnectionControllerTest {
     @Order(1)
     void createNewCustomer_ShouldSaveToDatabase_WhenAuthenticated() throws Exception {
 
-//        byte[] secretKeyBytes = "bu5HenKK9pCurkUUic604aWzpvY4XruaVZsIkArn0EE9M9GFfTX1vq3vSubM1gwyrZB0Fs22yv5XsWt8jxbT8h".getBytes(StandardCharsets.UTF_8);
-//
-//        String token = Jwts.builder()
-//                .subject("1")
-//                .issuedAt(new Date())
-//                .expiration(new Date(System.currentTimeMillis() + 3600000))
-//                .signWith(Keys.hmacShaKeyFor(secretKeyBytes))
-//                .compact();
-
         String customerPayload = """
                         {
                             "firstname": "test",
