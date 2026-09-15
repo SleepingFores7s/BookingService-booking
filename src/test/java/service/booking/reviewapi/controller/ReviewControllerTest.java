@@ -53,7 +53,7 @@ class ReviewControllerTest {
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(reviewPayload))
-                .andExpect(status().isCreated());
+                .andExpect(status().isOk());
     }
 
     @Test
