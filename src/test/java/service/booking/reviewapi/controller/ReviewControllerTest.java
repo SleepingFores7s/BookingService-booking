@@ -42,7 +42,7 @@ class ReviewControllerTest {
 
         String reviewPayload = """
         {
-            "roomId": 102,
+            "roomNumber": 102,
             "reviewContent": "Integration test review content",
             "reviewScore": 5
         }
