@@ -26,7 +26,7 @@ jobs:
       - name: Start Docker Compose Stack
         run: docker compose up -d
         env:
-          JWT_SECRET: ${{ secrets.JWT_SECRET_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           BOOKING_DB_ROOT_PASS: ${{ secrets.BOOKING_DB_ROOT_PASS }}
           BOOKING_DB_USER: ${{ secrets.BOOKING_DB_USER }}
           BOOKING_DB_PASS: ${{ secrets.BOOKING_DB_PASS }}
@@ -51,7 +51,7 @@ jobs:
         run: mvn -B clean test --file pom.xml
         env:
           SPRING_PROFILES_ACTIVE: test
-          JWT_SECRET: ${{ secrets.JWT_SECRET_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3307/Booking-service
           SPRING_DATASOURCE_USERNAME: ${{ secrets.BOOKING_DB_USER }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.BOOKING_DB_PASS }}
