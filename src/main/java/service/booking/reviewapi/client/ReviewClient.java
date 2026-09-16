@@ -16,7 +16,8 @@ public class ReviewClient {
     private final RestClient restClient;
 
     public ReviewClient(@Value("${REVIEW_DB_CLIENT_URL:http://review-service:8083}") String baseUrl) {
-        this.restClient = RestClient.builder()
+        this.restClient = RestClient
+                .builder()
                 .baseUrl(baseUrl)
                 .build();
     }
