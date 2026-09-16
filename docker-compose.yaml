@@ -53,7 +53,7 @@ services:
       - customer_mysql_data:/var/lib/mysql
 
   customer-service:
-    image: beatasp/booking-system-customer:latest
+    image: sleepingfores7s/booking-customer:latest
     container_name: customer-service
     ports:
       - "8081:8081"
