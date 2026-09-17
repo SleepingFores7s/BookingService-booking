@@ -7,15 +7,18 @@ import service.booking.customerapi.client.CustomerClient;
 import service.booking.customerapi.dto.CreateCustomerDto;
 import service.booking.customerapi.dto.LoginCustomerDto;
 import service.booking.customerapi.dto.UpdateCustomerDto;
+import service.booking.customerapi.service.CustomerService;
 
 @RestController
 @RequestMapping("/connect")
 public class CustomerController {
 
     private final CustomerClient customerClient;
+    private final CustomerService customerService;
 
-    public CustomerController(CustomerClient customerClient) {
+    public CustomerController(CustomerClient customerClient, CustomerService customerService) {
         this.customerClient = customerClient;
+        this.customerService = customerService;
     }
 
     @PostMapping("/create")
@@ -40,6 +43,6 @@ public class CustomerController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteAccount(@AuthenticationPrincipal Long userId, @RequestHeader("Authorization") String jwt) {
-        return customerClient.deleteAccount(userId, jwt);
+        return customerService.deleteAccount(userId, jwt);
     }
 }
