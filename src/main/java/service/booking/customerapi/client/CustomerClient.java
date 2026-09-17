@@ -8,7 +8,6 @@ import service.booking.customerapi.dto.CreateCustomerDto;
 import service.booking.customerapi.dto.CustomerMyPageInfoDto;
 import service.booking.customerapi.dto.LoginCustomerDto;
 import service.booking.customerapi.dto.UpdateCustomerDto;
-import service.booking.exceptionhandler.customexeptions.ExternalServiceConnectionException;
 
 @Component
 public class CustomerClient {
