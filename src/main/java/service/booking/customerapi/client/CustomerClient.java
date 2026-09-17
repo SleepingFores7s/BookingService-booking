@@ -1,7 +1,13 @@
 package service.booking.customerapi.client;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import service.booking.customerapi.dto.CreateCustomerDto;
+import service.booking.customerapi.dto.CustomerMyPageInfoDto;
+import service.booking.customerapi.dto.LoginCustomerDto;
+import service.booking.customerapi.dto.UpdateCustomerDto;
 import service.booking.exceptionhandler.customexeptions.ExternalServiceConnectionException;
 
 @Component
@@ -9,30 +15,59 @@ public class CustomerClient {
 
     private final RestClient restClient;
 
-    public CustomerClient() {
+    public CustomerClient(@Value("${CUSTOMER_DB_CLIENT_URL:http://customer-service:8081}") String baseUrl) {
         this.restClient = RestClient.builder()
-                .baseUrl("http://customer-service:8081")
+                .baseUrl(baseUrl)
                 .build();
     }
 
-    public record CustomerExistsResponse(Boolean exists) {}
+    public ResponseEntity<Object> createCustomer(CreateCustomerDto request) {
+        return restClient.post()
+                .uri("/api/customers/create")
+                .body(request)
+                .retrieve()
+                .toEntity(Object.class);
+    }
+
+    public ResponseEntity<String> login(LoginCustomerDto dto) {
+        return restClient.post()
+                .uri("/auth/login")
+                .body(dto)
+                .retrieve()
+                .toEntity(String.class);
+    }
+
+    public ResponseEntity<CustomerMyPageInfoDto> getCustomerInfo(String token) {
+        return restClient.get()
+                .uri("/api/customers/info")
+                .header("Authorization", formatBearerToken(token))
+                .retrieve()
+                .toEntity(CustomerMyPageInfoDto.class);
+    }
+
+    public ResponseEntity<Object> updateCustomer(String token, UpdateCustomerDto update) {
+        return restClient.post()
+                .uri("/api/customers/update")
+                .header("Authorization", formatBearerToken(token))
+                .body(update)
+                .retrieve()
+                .toEntity(Object.class);
+    }
 
     public boolean customerExists(String token) {
-        //ToDo After customer service will be done check if url is correct
-        System.err.println("Customer exists: 1");
-
-        try {
-            Boolean response = restClient.get()
+            return Boolean.TRUE.equals(restClient.get()
                     .uri("/api/customers/does-customer-exist")
                     .header("Authorization", formatBearerToken(token))
                     .retrieve()
-                    .body(Boolean.class);
+                    .body(Boolean.class));
+    }
 
-            System.err.println("Customer exists: 2" + response);
-            return Boolean.TRUE.equals(response);
-        } catch (Exception e) {
-            throw new ExternalServiceConnectionException("No connection with customer service");
-        }
+    public ResponseEntity<Object> deleteAccount(String token) {
+        return restClient.delete()
+                .uri("/api/customers/delete")
+                .header("Authorization", formatBearerToken(token))
+                .retrieve()
+                .toEntity(Object.class);
     }
 
     private String formatBearerToken(String token) {
