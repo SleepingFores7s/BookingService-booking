@@ -8,17 +8,20 @@ import service.booking.customerapi.dto.CreateCustomerDto;
 import service.booking.customerapi.dto.CustomerMyPageInfoDto;
 import service.booking.customerapi.dto.LoginCustomerDto;
 import service.booking.customerapi.dto.UpdateCustomerDto;
-import service.booking.exceptionhandler.customexeptions.ExternalServiceConnectionException;
+import service.booking.exceptionhandler.customexeptions.HaveReservationException;
+import service.booking.reservation.service.ReservationService;
 
 @Component
 public class CustomerClient {
 
     private final RestClient restClient;
+    private final ReservationService reservationService;
 
-    public CustomerClient(@Value("${CUSTOMER_DB_CLIENT_URL:http://customer-service:8081}") String baseUrl) {
+    public CustomerClient(@Value("${CUSTOMER_DB_CLIENT_URL:http://customer-service:8081}") String baseUrl, ReservationService reservationService) {
         this.restClient = RestClient.builder()
                 .baseUrl(baseUrl)
                 .build();
+        this.reservationService = reservationService;
     }
 
     public ResponseEntity<Object> createCustomer(CreateCustomerDto request) {
@@ -62,7 +65,12 @@ public class CustomerClient {
                     .body(Boolean.class));
     }
 
-    public ResponseEntity<Object> deleteAccount(String token) {
+    public ResponseEntity<Object> deleteAccount(Long userId, String token) {
+
+        if(reservationService.hasActiveReservation(userId)) {
+            throw new HaveReservationException("You can't delete your account while having active bookings");
+        }
+
         return restClient.delete()
                 .uri("/api/customers/delete")
                 .header("Authorization", formatBearerToken(token))
