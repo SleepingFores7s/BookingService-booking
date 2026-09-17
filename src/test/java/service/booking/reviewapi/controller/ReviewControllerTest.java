@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -23,10 +24,13 @@ class ReviewControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Value("${JWT_SECRET}")
+    private String JWT_SECRET;
+
     @Test
     void createNewReview_ShouldSaveToDatabase_WhenAuthenticated() throws Exception {
         // 1. Generate a valid JWT token locally (bypassing the offline login service)
-        byte[] secretKeyBytes = "bu5HenKK9pCurkUUic604aWzpvY4XruaVZsIkArn0EE9M9GFfTX1vq3vSubM1gwyrZB0Fs22yv5XsWt8jxbT8h".getBytes(StandardCharsets.UTF_8);
+        byte[] secretKeyBytes = JWT_SECRET.getBytes(StandardCharsets.UTF_8);
 
         String token = Jwts.builder()
                 .subject("1")
