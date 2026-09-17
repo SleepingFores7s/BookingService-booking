@@ -8,15 +8,13 @@ import service.booking.customerapi.dto.CreateCustomerDto;
 import service.booking.customerapi.dto.CustomerMyPageInfoDto;
 import service.booking.customerapi.dto.LoginCustomerDto;
 import service.booking.customerapi.dto.UpdateCustomerDto;
-import service.booking.exceptionhandler.customexeptions.HaveReservationException;
-import service.booking.reservation.service.ReservationService;
 
 @Component
 public class CustomerClient {
 
     private final RestClient restClient;
 
-    public CustomerClient(@Value("${CUSTOMER_DB_CLIENT_URL:http://customer-service:8081}") String baseUrl, ReservationService reservationService) {
+    public CustomerClient(@Value("${CUSTOMER_DB_CLIENT_URL:http://customer-service:8081}") String baseUrl) {
         this.restClient = RestClient.builder()
                 .baseUrl(baseUrl)
                 .build();
