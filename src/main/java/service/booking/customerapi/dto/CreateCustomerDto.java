@@ -1,6 +1,6 @@
-package service.booking.dto;
+package service.booking.customerapi.dto;
 
-public record CreateCustomerRequest(
+public record CreateCustomerDto(
         String firstname,
         String lastname,
         String identificationNumber,

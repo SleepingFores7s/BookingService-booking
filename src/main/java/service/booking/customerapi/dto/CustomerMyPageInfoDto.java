@@ -1,6 +1,6 @@
-package service.booking.dto;
+package service.booking.customerapi.dto;
 
-public record CustomerInfo(
+public record CustomerMyPageInfoDto(
         String firstname,
         String lastname,
         String email,

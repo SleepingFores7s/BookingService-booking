@@ -1,6 +1,6 @@
-package service.booking.dto;
+package service.booking.customerapi.dto;
 
-public record UpdateDto(
+public record UpdateCustomerDto(
         String firstname,
         String lastname,
         String email,
