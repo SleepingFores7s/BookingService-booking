@@ -1,6 +1,7 @@
 package service.booking.customerapi.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import service.booking.customerapi.client.CustomerClient;
 import service.booking.customerapi.dto.CreateCustomerDto;
@@ -38,7 +39,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteAccount(@RequestHeader("Authorization") String jwt) {
-        return customerClient.deleteAccount(jwt);
+    public ResponseEntity<?> deleteAccount(@AuthenticationPrincipal Long userId, @RequestHeader("Authorization") String jwt) {
+        return customerClient.deleteAccount(userId, jwt);
     }
 }
