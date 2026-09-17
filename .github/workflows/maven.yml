@@ -1,4 +1,4 @@
-name: Multi-Service Integration CI
+name: Booking-Service CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  integration-test:
+  build_and_test:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -62,3 +62,37 @@ jobs:
 
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+
+  deploy_to_docker_hub:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Build Image and Push to Docker Hub
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: 'true'
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/booking-booking:latest
+
+      - name: Deploy to Ubuntu Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/booking-booking:latest
+            cd /opt/docker/school_projects/monster_retirement_home
+            docker compose pull
+            docker compose up -d --no-deps booking-service
