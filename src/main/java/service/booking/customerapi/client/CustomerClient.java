@@ -20,12 +20,12 @@ public class CustomerClient {
                 .build();
     }
 
-    public ResponseEntity<Object> createCustomer(CreateCustomerDto request) {
+    public ResponseEntity<Void> createCustomer(CreateCustomerDto request) {
         return restClient.post()
                 .uri("/api/customers/create")
                 .body(request)
                 .retrieve()
-                .toEntity(Object.class);
+                .toBodilessEntity();
     }
 
     public ResponseEntity<String> login(LoginCustomerDto dto) {
