@@ -3,7 +3,7 @@ spring:
     name: Booking-service
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/Booking-service}
+    url: ${SPRING_DATASOURCE_URL:${BOOKING_DB_LOCAL_URL}}
     username: ${BOOKING_DB_USER}
     password: ${BOOKING_DB_PASS}
 
