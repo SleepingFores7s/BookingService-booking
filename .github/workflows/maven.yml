@@ -27,17 +27,17 @@ jobs:
         run: docker compose up -d
         env:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          BOOKING_DB_COMPOSE_URL: ${{ secrets.BOOKING_DB_COMPOSE_URL }} #TODO make github secret for url's
+          BOOKING_DB_COMPOSE_URL: ${{ secrets.BOOKING_DB_COMPOSE_URL }}
           BOOKING_DB_ROOT_PASS: ${{ secrets.BOOKING_DB_ROOT_PASS }}
           BOOKING_DB_USER: ${{ secrets.BOOKING_DB_USER }}
           BOOKING_DB_PASS: ${{ secrets.BOOKING_DB_PASS }}
 
-          CUSTOMER_DB_COMPOSE_URL: ${{ secrets.CUSTOMER_DB_COMPOSE_URL }} #TODO make github secret for url's
+          CUSTOMER_DB_COMPOSE_URL: ${{ secrets.CUSTOMER_DB_COMPOSE_URL }}
           CUSTOMER_DB_ROOT_PASS: ${{ secrets.CUSTOMER_DB_ROOT_PASS }}
           CUSTOMER_DB_PASS: ${{ secrets.CUSTOMER_DB_PASS }}
           CUSTOMER_DB_USER: ${{ secrets.CUSTOMER_DB_USER }}
 
-          REVIEW_DB_COMPOSE_URL: ${{ secrets.REVIEW_DB_COMPOSE_URL }} #TODO make github secret for url's
+          REVIEW_DB_COMPOSE_URL: ${{ secrets.REVIEW_DB_COMPOSE_URL }}
           REVIEW_DB_ROOT_PASS: ${{ secrets.REVIEW_DB_ROOT_PASS }}
           REVIEW_DB_PASS: ${{ secrets.REVIEW_DB_PASS }}
           REVIEW_DB_USER: ${{ secrets.REVIEW_DB_USER }}
@@ -55,7 +55,7 @@ jobs:
         env:
           SPRING_PROFILES_ACTIVE: test
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          BOOKING_DB_TEST_URL: ${{ secrets.BOOKING_DB_TEST_URL }} #jdbc:mysql://localhost:3307/Booking-service #TODO MAKE GITHUB SECRET
+          BOOKING_DB_TEST_URL: ${{ secrets.BOOKING_DB_TEST_URL }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.BOOKING_DB_USER }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.BOOKING_DB_PASS }}
 

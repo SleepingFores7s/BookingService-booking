@@ -93,7 +93,7 @@ services:
       - "8083:8083"
     environment: #Environment variables, what variables the program would need once it starts in docker.
       JWT_SECRET: ${JWT_SECRET}
-      SPRING_DATASOURCE_URL: ${REVIEW_DB_COMPOSE_URL} #URL to the created MySQL database schema.
+      SPRING_DATASOURCE_URL: ${CUSTOMER_DB_COMPOSE_URL} #URL to the created MySQL database schema.
       SPRING_DATASOURCE_USERNAME: ${REVIEW_DB_USER} #Username for the database, needs to be the name as the databases chosen user
       SPRING_DATASOURCE_PASSWORD: ${REVIEW_DB_PASS} #Password for the database, needs to be the same as the databases chosen password
     depends_on: #Makes the container rely on another container being present.
